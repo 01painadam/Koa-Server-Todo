@@ -1,0 +1,48 @@
+GET     http://localhost:5000/                  - splash page
+GET     http://localhost:5000/remotetasks       -list all tasks on MongoDB
+GET     http://localhost:5000/localtasks        -list all tasks on local tasklist.json file
+GET     http://localhost:5000/localtasks/2?id   - find task with id of 2 in local store 
+GET     http://localhost:5000/remotetasks/2?id  - NOT WORKING
+GET     http://localhost:5000/download          - Save remote tasks to local database
+
+POST ALL local tasks to remote mongo
+
+        curl -X POST \
+        http://localhost:5000/ \
+        -H 'cache-control: no-cache' \
+        -H 'content-type: application/json'
+
+POST new task manually from CLI
+
+        curl -X POST \
+        http://localhost:5000/tasks \
+        -H 'cache-control: no-cache' \
+        -H 'content-type: application/json' \
+        -d '{"id": "id", "task": "task_name", "done": "false"}'
+
+PATCH    - check/uncheck remote task as resolved by id has
+
+        curl -X PATCH \
+        http://localhost:5000/remoteresolve/59ce541864ac702536647fdd?id  \
+        -H 'cache-control: no-cache' \
+        -H 'content-type: application/json'
+
+PATCH   - check/uncheck ALL remote task as resolved
+
+        curl -X PATCH \
+        http://localhost:5000/remoteresolveall \
+        -H 'cache-control: no-cache' \
+        -H 'content-type: application/json'
+
+DELETE a remote task by _id
+
+        curl -X DELETE \
+        http://localhost:5000/remotetasks/59ce517c8f190121c4b6ede1?id \
+        -H 'cache-control: no-cache' \
+        -H 'content-type: application/json'
+
+DELETE all remote
+        curl -X DELETE \
+        http://localhost:5000/remotedeleteall \
+        -H 'cache-control: no-cache' \
+        -H 'content-type: application/json'
